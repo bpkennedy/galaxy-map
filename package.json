@@ -12,5 +12,8 @@
   "dependencies": {
     "3d-force-graph": "^1.52.0",
     "http-server": "^0.9.0"
+  },
+  "devDependencies": {
+    "ecstatic": "^2.2.2"
   }
 }
