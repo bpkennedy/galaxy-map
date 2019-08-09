@@ -1,0 +1,64 @@
+<head>
+  <style> body { margin: 0; } </style>
+
+  <script src="http://unpkg.com/three"></script>
+  <script src="http://unpkg.com/three-spritetext"></script>
+  <script src="http://unpkg.com/3d-force-graph"></script>
+  <!--<script src="../../dist/3d-force-graph.js"></script>-->
+</head>
+
+<body>
+  <div id="3d-graph"></div>
+
+  <script>
+    const elem = document.getElementById('3d-graph');
+    const Graph = ForceGraph3D()
+      (elem)
+        .jsonUrl('./planets.json')
+        .nodeLabel('id')
+        .nodeAutoColorBy('group')
+        .nodeThreeObject(node => {
+          var loader  = new THREE.TextureLoader(),
+            texture = loader.load("./text1.jpg");
+          var material = new THREE.MeshPhongMaterial({ 
+            map: texture,
+          });
+          
+          const obj = new THREE.Mesh(
+            new THREE.SphereGeometry(10),
+            // new THREE.MeshBasicMaterial({ depthWrite: false, transparent: false, opacity: 1 })
+            material,
+          );
+
+          const sprite = new SpriteText(node.id)
+          sprite.color = node.color;
+          sprite.textHeight = 8;
+          obj.add(sprite);
+
+          return obj;
+        })
+        .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
+        .onNodeClick(node => {
+          // Aim at node from outside it
+          const distance = 40;
+          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+          Graph.cameraPosition(
+            { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+            node, // lookAt ({ x, y, z })
+            3000  // ms transition duration
+          );
+        });
+    
+        
+        var skyGeo = new THREE.SphereGeometry(10000); 
+        var loader  = new THREE.TextureLoader(),
+        texture = loader.load( "https://cdn.eso.org/images/large/eso0932a.jpg" );
+        var material = new THREE.MeshPhongMaterial({ 
+          map: texture,
+        });
+
+        var sky = new THREE.Mesh(skyGeo, material);
+        sky.material.side = THREE.BackSide;
+        Graph.scene().add(sky);
+  </script> 
+</body>
