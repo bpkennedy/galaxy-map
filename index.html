@@ -14,29 +14,29 @@
     const elem = document.getElementById('3d-graph');
     const Graph = ForceGraph3D()
       (elem)
-        .jsonUrl('./planets.json')
+        .jsonUrl('./planetsPerfLoad.json')
         .nodeLabel('id')
         .nodeAutoColorBy('group')
-        .nodeThreeObject(node => {
-          var loader  = new THREE.TextureLoader(),
-            texture = loader.load("./text1.jpg");
-          var material = new THREE.MeshPhongMaterial({ 
-            map: texture,
-          });
+        // .nodeThreeObject(node => {
+        //   var loader  = new THREE.TextureLoader(),
+        //     texture = loader.load("./text1.jpg");
+        //   var material = new THREE.MeshPhongMaterial({ 
+        //     map: texture,
+        //   });
           
-          const obj = new THREE.Mesh(
-            new THREE.SphereGeometry(10),
-            // new THREE.MeshBasicMaterial({ depthWrite: false, transparent: false, opacity: 1 })
-            material,
-          );
+        //   const obj = new THREE.Mesh(
+        //     new THREE.SphereGeometry(10),
+        //     // new THREE.MeshBasicMaterial({ depthWrite: false, transparent: false, opacity: 1 })
+        //     material,
+        //   );
 
-          const sprite = new SpriteText(node.id)
-          sprite.color = node.color;
-          sprite.textHeight = 8;
-          obj.add(sprite);
+        //   const sprite = new SpriteText(node.id)
+        //   sprite.color = node.color;
+        //   sprite.textHeight = 8;
+        //   obj.add(sprite);
 
-          return obj;
-        })
+        //   return obj;
+        // })
         .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
         .onNodeClick(node => {
           // Aim at node from outside it
@@ -50,15 +50,15 @@
         });
     
         
-        var skyGeo = new THREE.SphereGeometry(10000); 
-        var loader  = new THREE.TextureLoader(),
-        texture = loader.load( "https://cdn.eso.org/images/large/eso0932a.jpg" );
-        var material = new THREE.MeshPhongMaterial({ 
-          map: texture,
-        });
+        // var skyGeo = new THREE.SphereGeometry(10000); 
+        // var loader  = new THREE.TextureLoader(),
+        // texture = loader.load( "https://cdn.eso.org/images/large/eso0932a.jpg" );
+        // var material = new THREE.MeshPhongMaterial({ 
+        //   map: texture,
+        // });
 
-        var sky = new THREE.Mesh(skyGeo, material);
-        sky.material.side = THREE.BackSide;
-        Graph.scene().add(sky);
+        // var sky = new THREE.Mesh(skyGeo, material);
+        // sky.material.side = THREE.BackSide;
+        // Graph.scene().add(sky);
   </script> 
 </body>
